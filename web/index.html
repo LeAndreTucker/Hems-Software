@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HEMS Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">HEMS Dashboard</div>
+
+    <div class="right">
+      <div id="statusBadge" class="badge badge-disconnected">DISCONNECTED</div>
+      <button id="btnReconnect" class="btn small">Reconnect</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card hero">
+      <div class="label">Total Power</div>
+      <div id="totalPower" class="value">-- W</div>
+      <div id="lastUpdate" class="sub">Last update: --</div>
+    </section>
+
+    <section class="card">
+      <div class="label">Plug 1</div>
+      <div id="plug1Power" class="value">-- W</div>
+
+      <div class="row">
+        <button id="btnOn" class="btn">ON</button>
+        <button id="btnOff" class="btn danger">OFF</button>
+      </div>
+
+      <div class="hint">
+        Commands are sent to the bridge, which publishes to MQTT.
+      </div>
+    </section>
+
+    <section class="card log">
+      <div class="label">Live Log</div>
+      <pre id="logBox" class="logbox">(waiting…)</pre>
+
+      <div class="row">
+        <button id="btnClearLog" class="btn small">Clear Log</button>
+        <button id="btnDemo" class="btn small">Demo Mode</button>
+      </div>
+
+      <div class="hint">
+        Demo Mode simulates incoming updates if you don’t have the bridge running yet.
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
