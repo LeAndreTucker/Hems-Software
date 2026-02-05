@@ -134,14 +134,27 @@ function connectWebSocket() {
   };
 
   ws.onmessage = (event) => {
-    const raw = String(event.data);
-    log(`IN: ${raw}`);
+  const raw = String(event.data);
 
-    try {
-      const obj = JSON.parse(raw);
-      handleMessage(obj);
-    } catch {
-      // If it's not JSON, ignore (but keep log)
+  try {
+    const obj = JSON.parse(raw);
+
+    // Compact, readable log format
+    if (obj.topic && obj.payload) {
+      const p = obj.payload;
+      const pw = (typeof p.power_w === "number") ? p.power_w.toFixed(1) : "?";
+      log(`IN: ${obj.topic}  power=${pw}W`);
+    } else if (obj.type === "device") {
+      log(`IN: device ${obj.id}  power=${Number(obj.power_w).toFixed(1)}W`);
+    } else if (obj.type === "total") {
+      log(`IN: total  power=${Number(obj.power_w).toFixed(1)}W`);
+    } else {
+      log(`IN: ${raw}`);
+    }
+
+    handleMessage(obj);
+  } catch {
+    log(`IN: ${raw}`);
     }
   };
 }

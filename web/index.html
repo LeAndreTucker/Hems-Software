@@ -17,14 +17,34 @@
   </header>
 
   <main class="grid">
+    <!-- Total Power -->
     <section class="card hero">
       <div class="label">Total Power</div>
       <div id="totalPower" class="value">-- W</div>
       <div id="lastUpdate" class="sub">Last update: --</div>
+
+      <div class="hint">
+        Data path: Hub → MQTT → Bridge → Web UI
+      </div>
     </section>
 
+    <!-- Devices (dynamic) -->
     <section class="card">
-      <div class="label">Plug 1</div>
+      <div class="label">Devices</div>
+
+      <!-- New: device-driven list renders here -->
+      <div id="devicesList" class="devices-list">
+        <!-- app.js will populate device cards -->
+      </div>
+
+      <div class="hint">
+        Devices appear automatically as telemetry arrives. Each card includes ON/OFF controls.
+      </div>
+    </section>
+
+    <!-- Optional Legacy Plug 1 panel (kept for compatibility / quick demo) -->
+    <section class="card">
+      <div class="label">Plug 1 (Legacy)</div>
       <div id="plug1Power" class="value">-- W</div>
 
       <div class="row">
@@ -33,10 +53,11 @@
       </div>
 
       <div class="hint">
-        Commands are sent to the bridge, which publishes to MQTT.
+        This panel remains for quick testing. The real UI is the dynamic Devices list.
       </div>
     </section>
 
+    <!-- Log -->
     <section class="card log">
       <div class="label">Live Log</div>
       <pre id="logBox" class="logbox">(waiting…)</pre>

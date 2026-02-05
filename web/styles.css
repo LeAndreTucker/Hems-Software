@@ -3,6 +3,13 @@
   --radius: 18px;
   --border: #dcdcdc;
   --muted: rgba(0,0,0,0.65);
+
+  --ok: #d7ffd9;
+  --warn: #fff1c6;
+  --bad: #ffd7d7;
+
+  --card-bg: #ffffff;
+  --btn-bg: #f2f2f2;
 }
 
 * { box-sizing: border-box; }
@@ -14,6 +21,7 @@ body {
   background: #ffffff;
 }
 
+/* ===== Top Bar ===== */
 .topbar {
   display: flex;
   align-items: center;
@@ -41,10 +49,11 @@ body {
   border: 1px solid var(--border);
 }
 
-.badge-connected { background: #d7ffd9; }
-.badge-disconnected { background: #ffd7d7; }
-.badge-stale { background: #fff1c6; }
+.badge-connected { background: var(--ok); }
+.badge-disconnected { background: var(--bad); }
+.badge-stale { background: var(--warn); }
 
+/* ===== Layout Grid ===== */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -55,6 +64,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--pad);
+  background: var(--card-bg);
 }
 
 .hero {
@@ -79,10 +89,18 @@ body {
   font-size: 14px;
 }
 
+.hint {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===== Buttons ===== */
 .row {
   display: flex;
   gap: 12px;
   margin-top: 14px;
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -91,12 +109,19 @@ body {
   font-size: 22px;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: #f2f2f2;
+  background: var(--btn-bg);
   font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn.small {
-  flex: 0;
+  flex: 0 0 auto;
   padding: 10px 12px;
   font-size: 14px;
   border-radius: 12px;
@@ -106,12 +131,72 @@ body {
   background: #ffb3b3;
 }
 
-.hint {
-  margin-top: 12px;
+.btn-on { background: var(--ok); }
+.btn-off { background: #ffb3b3; }
+
+/* ===== Devices List (dynamic) ===== */
+.devices-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.device-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  background: #fcfcfc;
+}
+
+.device-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.device-row:first-child {
+  margin-top: 0;
+}
+
+.device-title {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.device-metric {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.device-updated {
   font-size: 13px;
   color: var(--muted);
 }
 
+.device-status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.status-online { background: var(--ok); }
+.status-stale { background: var(--warn); }
+.status-offline { background: var(--bad); }
+.status-unknown { background: #efefef; }
+
+/* Make device buttons not giant inside cards */
+.device-card .btn {
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+/* ===== Log ===== */
 .log {
   grid-column: span 2;
 }
@@ -126,4 +211,21 @@ body {
   background: #fafafa;
   font-size: 12px;
   line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word; 
+}
+
+/* ===== Responsive / Touch Screens ===== */
+@media (max-width: 900px) {
+  body { padding: 12px; }
+  .grid { grid-template-columns: 1fr; }
+  .hero, .log { grid-column: span 1; }
+  .value { font-size: 40px; }
+  .btn { font-size: 20px; padding: 16px; }
+}
+
+@media (max-width: 520px) {
+  .title { font-size: 22px; }
+  .value { font-size: 36px; }
+  .btn.small { font-size: 13px; }
 }
